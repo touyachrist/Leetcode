@@ -1,0 +1,27 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *removeNthFromEnd(ListNode *head, int n) {
+        
+        ListNode *first=head;
+        ListNode **pre=&head;
+        
+        for(int i=1;i<n;i++){
+            first = first->next;
+        }
+        
+        while(first->next != NULL){
+            pre = &((*pre)->next);
+            first = first->next;
+        }
+        *pre = (*pre)->next;    //因为head存的是节点1的地址，且pre存的是head的地址，因此在节点数为1个的情况下，*pre与head是等价的。如果节点数不为1，那么就会进入上述循环体，执行“pre = &((*pre)->next);”语句，在这种情况下，*pre与head就不是等价了。详见“指针的指针原理”。
+        return head;
+    }
+};
